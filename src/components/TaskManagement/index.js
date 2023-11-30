@@ -14,7 +14,6 @@ class TaskManagement extends Component {
     search: '',
     errorMsg: '',
     emptyInput: '',
-    checked: false,
   }
 
   onSubmitForm = event => {
@@ -97,16 +96,6 @@ class TaskManagement extends Component {
     </div>
   )
 
-  isChecked = id => {
-    const {todoList} = this.state
-    const isCheckedId = todoList.map(eachData => eachData.id === id)
-    if (isCheckedId) {
-      this.setState(prevState => ({
-        checked: !prevState.checked,
-      }))
-    }
-  }
-
   onClickSaveButton = () => {
     const {todoList} = this.state
     localStorage.setItem('todoList', JSON.stringify(todoList))
@@ -140,7 +129,7 @@ class TaskManagement extends Component {
   }
 
   renderTodoLists = () => {
-    const {todoList, search, emptyInput, checked} = this.state
+    const {todoList, search, emptyInput} = this.state
     const searchResults = todoList.filter(eachData =>
       eachData.inputValue.toLowerCase().includes(search.toLowerCase()),
     )
@@ -154,8 +143,6 @@ class TaskManagement extends Component {
             deleteList={this.deleteList}
             editList={this.editList}
             emptyInputValue={emptyInput}
-            isCheckId={this.isChecked}
-            checked={checked}
           />
         ))}
       </ul>

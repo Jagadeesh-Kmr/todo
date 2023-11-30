@@ -5,20 +5,20 @@ import {TiEdit} from 'react-icons/ti'
 import './index.css'
 
 class TodoLists extends Component {
-  onClickCheckbox = () => {
-    const {isCheckId, todoLists} = this.props
+  state = {
+    isSubmit: false,
+  }
 
-    isCheckId(todoLists.id)
+  onClickCheckbox = () => {
+    this.setState(prevState => ({
+      isSubmit: !prevState.isSubmit,
+    }))
   }
 
   render() {
-    const {
-      todoLists,
-      deleteList,
-      editList,
-      emptyInputValue,
-      checked,
-    } = this.props
+    const {todoLists, deleteList, editList, emptyInputValue} = this.props
+    const {isSubmit} = this.state
+
     const {inputValue, id} = todoLists
 
     const onRemoveList = () => {
@@ -28,10 +28,9 @@ class TodoLists extends Component {
     const onEditList = () => {
       editList(id, inputValue)
     }
+    const inputClassName = isSubmit ? 'task-line-through' : 'task'
 
     const inputLen = inputValue.length === 0
-
-    const inputClassName = checked ? 'task-line-through' : 'task'
 
     return (
       <>
